@@ -1,6 +1,7 @@
 // smartcampus Management Centre/src/components/AddPricingForm.jsx
 import React, { useState } from 'react';
 import { Button, Input, Form, FormField, FormLabel, FormControl } from './ui/form';
+import { addPricing } from '../services/api'; // Import the API function
 
 const AddPricingForm = () => {
     const [title, setTitle] = useState('');
@@ -10,8 +11,12 @@ const AddPricingForm = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // Add your API call here to submit the form data
-        console.log({ title, price, amenities, hostelId });
+        try {
+            const response = await addPricing({ title, price, amenities, hostel_id: hostelId });
+            console.log(response.message); // Handle success
+        } catch (error) {
+            console.error('Error adding pricing:', error); // Handle error
+        }
     };
 
     return (
