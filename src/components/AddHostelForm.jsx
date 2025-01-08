@@ -21,8 +21,9 @@ export function AddHostelForm() {
     setAlertMessage(''); // Clear previous alert
 
     try {
-      await addHostel({ name, image, price, handle, category }); // Include category in the request
+      const response = await addHostel({ name, image, price, handle, category }); // Include category in the request
       // Reset form
+      const hostelId = response.hostelId; // Get the newly created hostel ID // Reset form
       setName('');
       setImage('');
       setPrice('');
@@ -30,7 +31,7 @@ export function AddHostelForm() {
       setCategory('normal'); // Reset category to default
       // Set success alert
       setAlertType('success');
-      setAlertMessage('Hostel added successfully!');
+      setAlertMessage(`Hostel added successfully with ID: ${hostelId}`);
     } catch (error) {
       // Set error alert
       setAlertType('error');
@@ -42,7 +43,7 @@ export function AddHostelForm() {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>Add New Hostel</CardTitle>
       </CardHeader>
