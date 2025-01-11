@@ -11,6 +11,7 @@ const CombinedForm = () => {
   const [hostelPrice, setHostelPrice] = useState('');
   const [handle, setHandle] = useState('');
   const [category, setCategory] = useState('normal');
+  const [type, setType] = useState('hostel'); // New state for type
   const [prices, setPrices] = useState([{ title: '', price: '', amenities: '' }, { title: '', price: '', amenities: '' }, { title: '', price: '', amenities: '' }]);
   const [isLoading, setIsLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
@@ -28,7 +29,7 @@ const CombinedForm = () => {
     setAlertMessage('');
 
     try {
-      const hostelResponse = await addHostel({ name, image, price: hostelPrice, handle, category });
+      const hostelResponse = await addHostel({ name, image, price: hostelPrice, handle, category, type });
       const hostelId = hostelResponse.hostelId;
 
       for (const price of prices) {
@@ -41,6 +42,7 @@ const CombinedForm = () => {
       setHostelPrice('');
       setHandle('');
       setCategory('normal');
+      setType('hostel'); // Reset type
       setPrices([{ title: '', price: '', amenities: '' }, { title: '', price: '', amenities: '' }, { title: '', price: '', amenities: '' }]);
 
       // Set success alert
@@ -111,6 +113,19 @@ const CombinedForm = () => {
               <option value="popular">Popular</option>
               <option value="top">Top</option>
               <option value="normal">Normal</option>
+            </select>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="type">Type</Label>
+            <select
+              id="type"
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+              required
+              className="p-2 w-full text-lg rounded border border-gray-300"
+            >
+              <option value="hostel">Hostel</option>
+              <option value="homstel">Homstel</option>
             </select>
           </div>
           {prices.map((price, index) => (
